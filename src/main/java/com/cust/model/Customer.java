@@ -1,9 +1,11 @@
 package com.cust.model;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,16 +23,23 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerId;
     
+    @Column(length = 20)
     private String firstName;
+    
+    @Column(length = 20)
     private String lastName;
+    
+    @Column(length = 50)
     private String email;
+    
+    @Column(length = 50)
     private String phone;
     
-//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<CustomerAddress> addresses = new ArrayList<>();
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<CustomerAddress> addresses = new ArrayList<>();
 
     public Customer() {
-        // Default constructor
+        super();
     }
 
     // Constructor without addresses parameter

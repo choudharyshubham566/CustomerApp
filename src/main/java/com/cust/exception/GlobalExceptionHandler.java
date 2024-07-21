@@ -10,7 +10,21 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(CustomerNotFondException.class)
 	public ResponseEntity<Object> handleCustomerNotFoundException(CustomerNotFondException ex){
-		String errorMessage = ex.getMessage();
-        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND); //404
+		 ApiError apiError = new ApiError(
+	                HttpStatus.NOT_FOUND.value(),
+	                HttpStatus.NOT_FOUND.getReasonPhrase(),
+	                ex.getMessage()
+	        );
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND); //404
+	}
+	
+	@ExceptionHandler(AdressNotFoundException.class)
+	public ResponseEntity<Object> handleAdressNotFoundException(AdressNotFoundException ex){
+		ApiError apiError = new ApiError(
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                ex.getMessage()
+        );
+    return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND); //404
 	}
 }

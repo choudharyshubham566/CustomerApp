@@ -1,5 +1,6 @@
 package com.cust.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -7,8 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,28 +18,34 @@ public class CustomerAddress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int addressId;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @Column(length = 50)
     private String address;
+    
+    @Column(length = 20)
     private String city;
+    
+    @Column(length = 20)
     private String state;
-    private String zipCode;
+    
+    @Column(length = 20)
     private String country;
+    
+    @Column(length = 10)
     private String addressType;
 
     public CustomerAddress() {
-        // Default constructor
+       super();
     }
 
     // Constructor without customer parameter
-    public CustomerAddress(String address, String city, String state, String zipCode, String country, String addressType) {
+    public CustomerAddress(String address, String city, String state, String country, String addressType) {
         this.address = address;
         this.city = city;
         this.state = state;
-        this.zipCode = zipCode;
         this.country = country;
         this.addressType = addressType;
     }
@@ -87,14 +92,6 @@ public class CustomerAddress {
         this.state = state;
     }
 
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
     public String getCountry() {
         return country;
     }
@@ -114,7 +111,7 @@ public class CustomerAddress {
     @Override
     public String toString() {
         return "CustomerAddress [addressId=" + addressId + ", customer=" + customer + ", address=" + address +
-                ", city=" + city + ", state=" + state + ", zipCode=" + zipCode + ", country=" + country +
+                ", city=" + city + ", state=" + state + ", country=" + country +
                 ", addressType=" + addressType + "]";
     }
 }

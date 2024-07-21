@@ -1,11 +1,11 @@
 package com.cust.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cust.annotation.LogCustomer;
 import com.cust.exception.CustomerNotFondException;
 import com.cust.model.Customer;
 import com.cust.repo.CustomerRepository;
@@ -16,27 +16,31 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 
+	@LogCustomer
 	@Override
 	public Customer createCustomer(Customer customer) {
 		return customerRepository.save(customer);
 	}
 
+	@LogCustomer
 	public Customer getCustomerById(Integer id) {
 		return customerRepository.findById(id)
-				.orElseThrow(() -> new CustomerNotFondException("Customer with Id " +id +" does not exist"));
+				.orElseThrow(() -> new CustomerNotFondException("Customer with Id " + id + " does not exist"));
 	}
 
+	@LogCustomer
 	@Override
 	public List<Customer> getAllCustomers() {
 		List<Customer> customers = customerRepository.findAll();
 		return customers;
 	}
 
+	@LogCustomer
 	@Override
 	public String deleteCustomer(Integer id) {
 
 		Customer customer = customerRepository.findById(id)
-				.orElseThrow(() -> new CustomerNotFondException("Customer with Id " +id +" does not exist"));
+				.orElseThrow(() -> new CustomerNotFondException("Customer with Id " + id + " does not exist"));
 		if (customer != null) {
 			customerRepository.delete(customer);
 			return "Customer Deleted Successfully";
@@ -46,6 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	}
 
+	@LogCustomer
 	@Override
 	public Customer updateCustomer(Customer updatedCustomer) {
 
